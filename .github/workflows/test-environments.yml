@@ -3,7 +3,7 @@ name: Test Environments
 on:
   push:
     branches:
-      - test-environments
+      - main
 
 # env:
 #   GLOBAL_ENV_A: ${{ vars.GLOBAL_A }}
