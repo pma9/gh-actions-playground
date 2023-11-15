@@ -1,0 +1,15 @@
+name: workflow caller
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-workflow-passing-data:
+    uses: ./.github/workflows/test-environments.yml
+    with:
+      BUILD_ENV: production
+      GLOBAL_A: ${{vars.GLOBAL_A}}
+      JOB_A: ${{vars.JOB_A}}
+      STEP_A: ${{vars.STEP_A}}

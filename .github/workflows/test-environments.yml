@@ -1,32 +1,54 @@
 name: Test Environments
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      BUILD_ENV:
+        required: true
+        type: string
+      GLOBAL_A:
+        required: true
+        type: string
+      JOB_A:
+        required: true
+        type: string
+      STEP_A:
+        required: true
+        type: string
 
-# env:
-#   GLOBAL_ENV_A: ${{ vars.GLOBAL_A }}
+env:
+  GLOBAL_ENV_A: ${{ inputs.GLOBAL_A }}
 
 jobs:
-  prod:
+  build_env:
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ inputs.BUILD_ENV }}
     env:
-      JOB_ENV_A: ${{ vars.JOB_A }}
+      JOB_ENV_A: ${{ inputs.JOB_A }}
     steps:
       - name: echo
         run: echo "Global - $GLOBAL_ENV_A .. Job -  $JOB_ENV_A .. STEP - $STEP_ENV_A!"
         env:
-          STEP_ENV_A: ${{ vars.STEP_A }}
+          STEP_ENV_A: ${{ inputs.STEP_A }}
 
   dev:
     runs-on: ubuntu-latest
     environment: development
     env:
-      JOB_ENV_A: ${{ vars.JOB_A }}
+      JOB_ENV_A: ${{ inputs.JOB_A }}
     steps:
       - name: echo
         run: echo "Global - $GLOBAL_ENV_A .. Job -  $JOB_ENV_A .. STEP - $STEP_ENV_A!"
         env:
-          STEP_ENV_A: ${{ vars.STEP_A }}
+          STEP_ENV_A: ${{ inputs.STEP_A }}
+
+  prod:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      JOB_ENV_A: ${{ inputs.JOB_A }}
+    steps:
+      - name: echo
+        run: echo "Global - $GLOBAL_ENV_A .. Job -  $JOB_ENV_A .. STEP - $STEP_ENV_A!"
+        env:
+          STEP_ENV_A: ${{ inputs.STEP_A }}
